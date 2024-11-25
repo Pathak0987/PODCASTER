@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import React Router
 import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home'; // Adjusted import path
+import MainLayout from './layout/MainLayout';
+import AuthLayout from './layout/AuthLayout';
 // Define placeholder components for each route
 const Homee = () => <h2>Home Page</h2>;
 const About = () => <h2>About Page</h2>;
@@ -14,10 +16,16 @@ const App = () => {
       <Navbar />
       <Home ></Home>
       <Routes>
-        {/* Define the Routes and the Components they map to */}
-        <Route path="/" element={<Homee />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/all-podcasts" element={<AllPodcasts />} />
+        {/* Main Layout Route */}
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Homee />} /> {/* Home component will render here */}
+        </Route>
+
+        {/* Auth Layout Route */}
+        <Route path="/auth" element={<AuthLayout />}>
+          {/* You can define additional routes for authentication here */}
+        </Route>
+        <Route path="/signup" element ={<signup/>} />
       </Routes>
     </Router>
   );
