@@ -1,13 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
-    "./src/**/*.{js,jsx,ts,tsx}",  // Make sure `.jsx` and `.tsx` are included
+    './index.html', // Make sure this points to your HTML file
+    './src/**/*.{js,ts,jsx,tsx}', // Scans JS/TS/JSX/TSX files inside the src directory
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-  // Disable purge in development (for testing)
-  mode: 'jit',
 }
