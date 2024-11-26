@@ -2,18 +2,22 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoReorderThreeOutline } from "react-icons/io5";
 import { ImCross } from "react-icons/im";
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  console.log(isLoggedIn);
   const [MobileNav, setMobileNav] = useState(false);
+  
 
   // Define the navigation links
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Categories", path: "/categories" },
     { name: "All Podcasts", path: "/all-podcasts" },
-    { name: "Profile", path: "/profile" },
-  ];
 
+  ];
+  const closerMobileNav=() => setMobileNav(false);
   return (
     <nav className="px-6 md:px-8 lg:px-12 py-4 relative">
       <div className="flex items-center justify-between">
@@ -47,18 +51,28 @@ const Navbar = () => {
 
         {/* Login / Sign Up Buttons (Desktop) */}
         <div className="hidden lg:flex items-center justify-end space-x-4">
-          <Link 
-            to="/login"
-            className="px-6 py-2 border border-gray-600 rounded-full text-gray-800 hover:bg-gray-100 transition-all duration-300"
-          >
-            Login
-          </Link>
-          <Link 
-            to="/signup"
-            className="px-6 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition-all duration-300"
-          >
-            Sign Up
-          </Link>
+        {!isLoggedIn && (
+  <>
+    <Link 
+      to="/login"
+      className="px-6 py-2 border border-gray-600 rounded-full text-gray-800 hover:bg-gray-100 transition-all duration-300"
+    >
+      Login
+    </Link>
+    <Link 
+      to="/signup"
+      className="px-6 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition-all duration-300"
+    >
+      Sign Up
+    </Link>
+  </>
+)}
+{isLoggedIn && <Link 
+      to="/profile"
+      className="px-6 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition-all duration-300"
+    >
+      Profile
+    </Link>}
         </div>
 
         {/* Mobile Menu Toggle Button */}

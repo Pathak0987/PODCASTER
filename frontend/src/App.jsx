@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react"; // Import React and useEffect together
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar/Navbar'; // Navbar component
 import Home from './pages/Home'; // Home component
@@ -9,7 +9,29 @@ import Login from "./pages/Login";
 import Categories from "./pages/Categories";
 import AllPodcasts from "./pages/AllPodcasts";
 import Profile from "./pages/profile";
+import axios from "axios"; // Import axios
+import ErrorPage from "./pages/ErrorPage";
 const App = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:1000/api/v1/check-cookie", // Corrected URL
+          { withCredentials: true } // Ensure cookies are sent
+        );
+        if (res.data.message == true )
+        {
+          dispatch(authActions.login());
+        }
+        console.log(res.data.message); // Log the response
+      } catch (error) {
+        console.error("Error fetching data:", error); // Handle errors
+      }
+    };
+
+    fetchData(); // Call the async function
+  }, []); // Empty dependency array ensures this runs only once on mount
+
   return (
     <div className="App">
       <Router>
