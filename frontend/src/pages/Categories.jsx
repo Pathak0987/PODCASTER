@@ -35,9 +35,9 @@ const Categories = () => {
     },
     {
       name: "International Relations",
-      color: "bg-blue-200",  // New color for the International Relations category
+      color: "bg-blue-200",
       to: "/categories/InternationalRelations",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9-YLBHR4ElNrA04AMTqpZ5jDQeZqZX4xahw&s", // Image for International Relations
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9-YLBHR4ElNrA04AMTqpZ5jDQeZqZX4xahw&s",
     },
   ];
 
@@ -48,10 +48,10 @@ const Categories = () => {
           <Link
             to={item.to}
             key={index}
-            className={`rounded-lg shadow-xl overflow-hidden relative ${item.color} hover:scale-105 transform transition-all duration-300 ease-in-out hover:shadow-2xl hover:rounded-3xl`}
+            className={`rounded-xl shadow-lg overflow-hidden relative ${item.color} hover:scale-105 transform transition-all duration-300 ease-in-out hover:shadow-2xl hover:rounded-3xl`}
           >
             {/* Gradient overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 hover:opacity-40 transition-all duration-300 ease-in-out rounded-lg"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 hover:opacity-40 transition-all duration-300 ease-in-out rounded-xl"></div>
 
             <div className="p-6 flex flex-col justify-center items-center transition-all duration-300 ease-in-out">
               {/* Category Name with Hover Effect */}
@@ -60,17 +60,17 @@ const Categories = () => {
               </h2>
 
               {/* Image with Hover Zoom and Shadow Effect */}
-              <div className="w-full flex justify-center">
+              <div className="w-full flex justify-center mb-4">
                 <img
                   src={item.img}
                   alt={item.name}
-                  className="rounded-lg h-[15vh] sm:h-[18vh] md:h-[20vh] lg:h-[24vh] object-cover transition-all duration-300 ease-in-out transform hover:scale-110 hover:shadow-lg"
+                  className="rounded-lg h-[15vh] sm:h-[18vh] md:h-[20vh] lg:h-[24vh] object-cover transition-all duration-300 ease-in-out transform hover:scale-110 hover:shadow-xl"
                 />
               </div>
             </div>
 
             {/* Optional Skeleton Loader (for when content is loading) */}
-            <div className="absolute inset-0 bg-gray-300 opacity-20 hover:opacity-0 transition-all duration-300 ease-in-out rounded-lg"></div>
+            <div className="absolute inset-0 bg-gray-300 opacity-20 hover:opacity-0 transition-all duration-300 ease-in-out rounded-xl"></div>
           </Link>
         ))}
       </div>

@@ -11,7 +11,13 @@ import AllPodcasts from "./pages/AllPodcasts";
 import Profile from "./pages/profile";
 import axios from "axios"; // Import axios
 import ErrorPage from "./pages/ErrorPage";
+import AddPodcast from "./pages/AddPodcast";
+import { useDispatch } from "react-redux";
+import InputPodcast from "./components/Addpodcast/inputPodcast";
+
 const App = () => {
+  const dispatch = useDispatch(); // Use dispatch to dispatch actions
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,9 +25,8 @@ const App = () => {
           "http://localhost:1000/api/v1/check-cookie", // Corrected URL
           { withCredentials: true } // Ensure cookies are sent
         );
-        if (res.data.message == true )
-        {
-          dispatch(authActions.login());
+        if (res.data.message === true) {
+          dispatch(authActions.login()); // Dispatch login action
         }
         console.log(res.data.message); // Log the response
       } catch (error) {
@@ -30,7 +35,7 @@ const App = () => {
     };
 
     fetchData(); // Call the async function
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []); // Ensure dispatch is included as dependency for useEffect
 
   return (
     <div className="App">
@@ -40,14 +45,16 @@ const App = () => {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} /> 
             <Route path="/categories" element={<Categories />} />
-            <Route path="/all-podcasts" element={<AllPodcasts />} /> {/* Fixed path */}
+            <Route path="/all-podcasts" element={<AllPodcasts />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/add-podcast" element={<AddPodcast />} />
+            <Route path="/input-podcast" element={<InputPodcast />} />
           </Route>
 
           {/* Auth Layout for authentication-related pages */}
           <Route path="/" element={<AuthLayout />}>
-            <Route path="Signup" element={<Signup />} /> {/* Signup page */}
-            <Route path="/login" element={<Login />} /> 
+            <Route path="signup" element={<Signup />} /> {/* Fixed path to lowercase */}
+            <Route path="/login" element={<Login />} />
           </Route>
         </Routes>
       </Router>

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: { isLoggedIn: false },  // Changed IsLoggedIn to isLoggedIn
+  initialState: { isLoggedIn: true },  // Changed IsLoggedIn to isLoggedIn
   reducers: {
     login(state) {
       state.isLoggedIn = true;  // Updated to match the camelCase convention
