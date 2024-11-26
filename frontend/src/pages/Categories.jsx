@@ -33,27 +33,44 @@ const Categories = () => {
       to: "/categories/Government",
       img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Government_of_India_logo.svg/1200px-Government_of_India_logo.svg.png",
     },
+    {
+      name: "International Relations",
+      color: "bg-blue-200",  // New color for the International Relations category
+      to: "/categories/InternationalRelations",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9-YLBHR4ElNrA04AMTqpZ5jDQeZqZX4xahw&s", // Image for International Relations
+    },
   ];
 
   return (
-    <div className="h-screen lg:h-[78vh]">
-      <div className="px-4 lg:px-12 py-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div className="h-screen lg:h-[78vh] bg-gray-100">
+      <div className="px-4 lg:px-12 py-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
         {categories.map((item, index) => (
           <Link
             to={item.to}
             key={index}
-            className={`rounded-lg shadow-lg overflow-hidden relative ${item.color} hover:scale-105 transform transition-all`}
+            className={`rounded-lg shadow-xl overflow-hidden relative ${item.color} hover:scale-105 transform transition-all duration-300 ease-in-out hover:shadow-2xl hover:rounded-3xl`}
           >
-            <div className="p-6 flex flex-col justify-center items-center">
-              <h2 className="text-2xl font-semibold mb-4">{item.name}</h2>
+            {/* Gradient overlay on hover */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 hover:opacity-40 transition-all duration-300 ease-in-out rounded-lg"></div>
+
+            <div className="p-6 flex flex-col justify-center items-center transition-all duration-300 ease-in-out">
+              {/* Category Name with Hover Effect */}
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4 transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-gray-900">
+                {item.name}
+              </h2>
+
+              {/* Image with Hover Zoom and Shadow Effect */}
               <div className="w-full flex justify-center">
                 <img
                   src={item.img}
                   alt={item.name}
-                  className="rounded-lg h-[15vh] md:h-[18vh] lg:h-[20vh] object-cover"
+                  className="rounded-lg h-[15vh] sm:h-[18vh] md:h-[20vh] lg:h-[24vh] object-cover transition-all duration-300 ease-in-out transform hover:scale-110 hover:shadow-lg"
                 />
               </div>
             </div>
+
+            {/* Optional Skeleton Loader (for when content is loading) */}
+            <div className="absolute inset-0 bg-gray-300 opacity-20 hover:opacity-0 transition-all duration-300 ease-in-out rounded-lg"></div>
           </Link>
         ))}
       </div>

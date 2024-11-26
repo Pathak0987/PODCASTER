@@ -7,6 +7,8 @@ import AuthLayout from './layout/AuthLayout'; // Auth layout
 import Signup from "./pages/signup";
 import Login from "./pages/Login";
 import Categories from "./pages/Categories";
+import AllPodcasts from "./pages/AllPodcasts";
+import Profile from "./pages/profile";
 const App = () => {
   return (
     <div className="App">
@@ -16,6 +18,8 @@ const App = () => {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} /> 
             <Route path="/categories" element={<Categories />} />
+            <Route path="/all-podcasts" element={<AllPodcasts />} /> {/* Fixed path */}
+            <Route path="/profile" element={<Profile />} />
           </Route>
 
           {/* Auth Layout for authentication-related pages */}
