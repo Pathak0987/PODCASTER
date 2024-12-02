@@ -1,6 +1,9 @@
 const router = require("express").Router();
 const User = require("../models/User"); // Adjust path if needed
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middleware/authMiddleware");
+
 
 // Signup route
 router.post("/signup", async (req, res) => {
@@ -50,5 +53,92 @@ router.post("/signup", async (req, res) => {
         res.status(500).json({ msg: "Server error", error });
     }
 });
+
+// Sign-in route
+router.post("/sign-in", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Validate input fields
+        if (!email || !password) {
+            return res.status(400).json({ msg: "Please enter all fields." });
+        }
+
+        // Check if user exists
+        const existingUser = await User.findOne({ email });
+        if (!existingUser) {
+            return res.status(400).json({ msg: "Invalid credentials." });
+        }
+
+        // Check if password matches
+        const isMatch = await bcrypt.compare(password, existingUser.password);
+        if (!isMatch) {
+            return res.status(400).json({ msg: "Invalid credentials." });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: existingUser._id, email: existingUser.email },
+            process.env.JWT_SECRET,
+            { expiresIn: "30d" }
+        );
+
+        // Set cookie
+        res.cookie("podcasterUserToken", token, {
+            httpOnly: true,
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
+            secure: process.env.NODE_ENV === "production", // Secure cookie for production
+            sameSite: "none",
+        });
+
+        // Send response
+        return res.status(200).json({
+            id: existingUser._id,
+            username: existingUser.username,
+            email: existingUser.email,
+            message: "Sign-in successful",
+        });
+    } catch (error) {
+        console.error("Error in sign-in route:", error);
+        res.status(500).json({ msg: "Server error", error });
+    }
+});
+
+//logout 
+router.post("/logout", async (req, res) => {
+   
+        res.clearCookie("podcasterUserToken",{
+            httpOnly: true,
+
+        });
+        
+        res.status(200).json({message:"logged out"});
+    });
+            
+// check cookie present or not
+router.get("/checkCookie", async(req, res) => {
+    const token = req.cookies.podcasterUserToken;
+    if (!token) {
+         res.status(200).json({ message: "true" });
+    }
+         res.status(200).json({ message: "false" });
+    });
+
+
+    //Router to Fetch user details
+    router.get("/user-details", authMiddleware,async(req, res) => {
+        try{
+           const {email} =req.User;
+           const existingUser = await User.findOne({email}).select("password");
+           return res.status(200).json({
+            User :existingUser,
+           })
+
+        }catch (error) {
+        console.error("Error in sign-in route:", error);
+        res.status(500).json({ msg: "Server error", error });
+    }
+        });
+     
 
 module.exports = router;
